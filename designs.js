@@ -1,32 +1,37 @@
 // event listeners
 
-$('input[type=submit]').on('click', function( event ){
+const sizePicker = document.querySelector("#sizePicker");
+sizePicker.addEventListener('submit', function( event ) {
 	event.preventDefault();
 	makeGrid();
-})
-
-$('#pixelCanvas').on('click', 'td', function( event ) {
-	color = $('input[type=color]').val()
-	$(this).css('background-color', color);
 })
 
 // functions
 
 function makeGrid() {
 	// reset the grid
-	$('#pixelCanvas').empty();
+	document.querySelector('#pixelCanvas').innerHTML = '';
 
-	const height = $('input[type=number]').val();
-	const width = $('input[type=number]').next().val();
-
+	const inputField = document.querySelector('input[type=number]');
+	const height = inputField.value;
+	const width = inputField.nextElementSibling.value;
+	
+	const table = document.getElementById('pixelCanvas')
 	for(var rowCount=0; rowCount<height; rowCount++) {
-		createRow(width);
+		const row = table.insertRow(rowCount)
+		populateRow(row, width);
 	}
 }
 
-function createRow(width) {
-	$('#pixelCanvas').append('<tr></tr>')
+function populateRow(row, width) {
 	for(var columnCount=0; columnCount<width; columnCount++) {
-		$('tr:last-of-type').append('<td></td>')
+		const cell = row.insertCell(columnCount);
+		cell.addEventListener('click', paintCell)
 	}
+}
+
+function paintCell(event) {
+	const colorPicker = document.querySelector('input[type=color]')
+	const color = colorPicker.value;
+	event.target.style.backgroundColor = color;
 }

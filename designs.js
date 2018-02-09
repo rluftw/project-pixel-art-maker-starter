@@ -1,3 +1,9 @@
+// constants
+const inputHeightField = document.querySelector('input[type=number]');
+const inputWidthField = document.querySelector('input[type=number]').nextElementSibling;
+const colorPicker = document.querySelector('input[type=color]');
+const table = document.querySelector('#pixelCanvas');
+
 // event listeners
 
 const sizePicker = document.querySelector("#sizePicker");
@@ -10,13 +16,11 @@ sizePicker.addEventListener('submit', function( event ) {
 
 function makeGrid() {
 	// reset the grid
-	document.querySelector('#pixelCanvas').innerHTML = '';
+	table.innerHTML = '';
 
-	const inputField = document.querySelector('input[type=number]');
-	const height = inputField.value;
-	const width = inputField.nextElementSibling.value;
+	const height = inputHeightField.value;
+	const width = inputWidthField.value;
 	
-	const table = document.getElementById('pixelCanvas')
 	for(var rowCount=0; rowCount<height; rowCount++) {
 		const row = table.insertRow(rowCount)
 		populateRow(row, width);
@@ -31,7 +35,6 @@ function populateRow(row, width) {
 }
 
 function paintCell(event) {
-	const colorPicker = document.querySelector('input[type=color]')
 	const color = colorPicker.value;
 	event.target.style.backgroundColor = color;
 }
